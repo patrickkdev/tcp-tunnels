@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/patrickkdev/tcptunnel/internal/domain"
-	"github.com/patrickkdev/tcptunnel/internal/infrastructure/db"
-	"github.com/patrickkdev/tcptunnel/internal/infrastructure/tcptunnels"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/domain"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/infrastructure/db"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/infrastructure/tcptunnels"
 )
 
 type Manager struct {

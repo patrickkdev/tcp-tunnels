@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"sync"
 
-	"github.com/patrickkdev/tcptunnel/internal/domain"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/domain"
 )
 
 type Event struct {

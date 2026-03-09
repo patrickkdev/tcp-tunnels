@@ -7,9 +7,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/patrickkdev/tcptunnel/configs"
-	"github.com/patrickkdev/tcptunnel/internal/application"
-	"github.com/patrickkdev/tcptunnel/internal/infrastructure/db"
+	"github.com/patrickkdev/tcptunnelsmanager/configs"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/application"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/infrastructure/db"
 )
 
 func main() {

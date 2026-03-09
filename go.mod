@@ -1,4 +1,4 @@
-module github.com/patrickkdev/tcptunnel
+module github.com/patrickkdev/tcptunnelsmanager
 
 go 1.24.0
 

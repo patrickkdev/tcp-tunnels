@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/patrickkdev/tcptunnel/internal/infrastructure/db"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/infrastructure/db"
 )
 
 var (

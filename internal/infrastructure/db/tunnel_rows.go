@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/patrickkdev/tcptunnel/internal/domain"
+	"github.com/patrickkdev/tcptunnelsmanager/internal/domain"
 )
 
 type TunnelRowsRepo struct {
