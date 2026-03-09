@@ -8,11 +8,7 @@ The system uses MySQL because a client required tunnel configurations and logs t
 
 In many cases a project like this could be configured through a CLI or simple configuration files. However, the client preferred database-backed configuration so the tunnels could integrate with their existing systems and operational workflows.
 
-Because of that requirement, MySQL serves as the control and persistence layer for:
-
-- tunnel configuration
-- tunnel lifecycle state
-- tunnel logs and activity records
+Because of that requirement, MySQL serves as the control and persistence layer for configuration and logs.
 
 ## Why `socat`?
 
@@ -93,8 +89,8 @@ go run cmd/app/main.go
 
 The `schema.sql` file defines the tables used by the system:
 
-- `tunnel_rows` — Stores the configuration for each tunnel
-- `tunnel_logs` — Stores tunnel activity and process logs
+- `tcp_tunnels` — Stores the configuration for each tunnel
+- `tcp_tunnel_logs` — Stores tunnel activity and process logs
 
 ## Contributing
 
