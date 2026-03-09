@@ -33,10 +33,10 @@ func (r *TunnelRowsRepo) List(ctx context.Context) ([]domain.TunnelRow, error) {
 		return nil, err
 	}
 
-	return mapTunnelRows(rows), nil
+	return r.mapTunnelRows(rows), nil
 }
 
-func mapTunnelRows(rows []tunnelRow) []domain.TunnelRow {
+func (r *TunnelRowsRepo) mapTunnelRows(rows []tunnelRow) []domain.TunnelRow {
 	tunnelRows := make([]domain.TunnelRow, len(rows))
 
 	for i, r := range rows {
