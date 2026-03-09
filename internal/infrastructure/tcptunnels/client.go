@@ -33,7 +33,7 @@ type Tunnel struct {
 	MaxRetryBackoff time.Duration
 }
 
-func New(row domain.TunnelRow) *Tunnel {
+func NewTunnel(row domain.TunnelRow) *Tunnel {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	return &Tunnel{

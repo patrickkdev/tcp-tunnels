@@ -61,7 +61,7 @@ func (m *Manager) reconcile(ctx context.Context, rows []domain.TunnelRow) {
 
 		// CREATE
 		if !exists {
-			t := tcptunnels.New(row)
+			t := tcptunnels.NewTunnel(row)
 
 			if err := t.Start(); err != nil {
 				msg := fmt.Sprintf("tunnel start failed port=%d err=%v", port, err)
@@ -94,7 +94,7 @@ func (m *Manager) reconcile(ctx context.Context, rows []domain.TunnelRow) {
 
 			t.Stop()
 
-			newTunnel := tcptunnels.New(row)
+			newTunnel := tcptunnels.NewTunnel(row)
 
 			if err := newTunnel.Start(); err != nil {
 				msg := fmt.Sprintf("tunnel restart failed port=%d err=%v", port, err)
