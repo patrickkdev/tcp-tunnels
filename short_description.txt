@@ -1,1 +1,0 @@
-A TCP tunnels manager that uses `socat` to provide functionality for creating, managing, and monitoring TCP tunnels with MySQL database integration for configuration and logging.

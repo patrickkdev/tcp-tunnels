@@ -4,60 +4,98 @@ This project implements a TCP tunnels manager in Go. It allows for the creation,
 
 ## Why MySQL?
 
-This project uses a MySQL database because it was a requirement from a client who requested that tunnel configurations and logs be persisted in a database.
+The system uses MySQL because a client required tunnel configurations and logs to be stored in a database.
 
-The original intention for a project like this would typically be a simpler CLI-driven configuration or file-based approach. However, the client preferred storing configuration and activity logs in database tables for integration with their existing systems and workflows.
+In many cases a project like this could be configured through a CLI or simple configuration files. However, the client preferred database-backed configuration so the tunnels could integrate with their existing systems and operational workflows.
 
-As a result, MySQL is used as the control and persistence layer for tunnel configurations and logs.
+Because of that requirement, MySQL serves as the control and persistence layer for:
+
+- tunnel configuration
+- tunnel lifecycle state
+- tunnel logs and activity records
+
+## Why `socat`?
+
+Actual TCP forwarding is handled by `socat`.
+
+Rather than reimplementing a TCP proxy in Go, the project delegates the networking layer to `socat`, a mature and widely used Unix utility designed for socket and TCP bridging.
+
+The Go application focuses on orchestration:
+
+- starting and stopping tunnel processes
+- supervising process lifecycle
+- restarting tunnels if they exit
+- collecting and storing logs
+- loading configuration from the database
+
+This keeps the implementation simple while relying on a battle-tested networking tool.
 
 ## Features
 
-- **Tunnel Management:** Create, update, and delete TCP tunnel configurations.
-- **Database Integration:** Stores tunnel configurations and logs in a MySQL database.
-- **Tunnel Logging:** Records connection events and data transfer for each tunnel.
-- **Client-Side Tunneling:** Provides functionality for establishing and managing TCP tunnel clients.
+- **Tunnel Management** — Create, update, and remove tunnel configurations.
+- **Process Supervision** — Automatically restarts tunnels if they exit unexpectedly.
+- **Database Integration** — Stores configuration and logs in MySQL.
+- **Tunnel Logging** — Captures process output and records events.
+- **Clean Architecture** — Clear separation between domain, application logic, and infrastructure.
 
 ## Project Structure
 
-The project follows a clean architecture pattern, separating concerns into distinct layers:
+The project follows a clean architecture style layout:
 
-- `cmd/app`: Contains the main application entry point.
-- `configs`: Handles application configuration and initialization.
-- `internal/application`: Implements the core business logic and use cases (e.g., `tunnels_manager.go`).
-- `internal/domain`: Defines the core entities and interfaces (e.g., `tunnel_log.go`, `tunnel_row.go`).
-- `internal/infrastructure`: Provides implementations for external concerns like database access (`db`) and TCP tunneling (`tcptunnels`).
+- `cmd/app` — Application entrypoint
+- `configs` — Configuration and initialization
+- `internal/application` — Core business logic and use cases
+- `internal/domain` — Core entities and interfaces
+- `internal/infrastructure` — Implementations for external systems (database, TCP tunnels)
 
-## Getting Started
-
-### Prerequisites
+## Requirements
 
 - Go
-- MySQL Database
+- MySQL
+- `socat`
 
-### Setup
+### Installing socat
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/patrickkdev/tcp-tunnels.git
-   cd tcp-tunnels
-   ```
+Debian / Ubuntu:
 
-2. **Set up environment variables:**
+```bash
+apt install socat
+```
 
-   Create a `.env` file in the project root with your database connection string and other necessary configurations. Refer to `configs/init.go` for required variables.
+Arch Linux:
 
-3. **Run the application:**
-   ```bash
-   go run cmd/app/main.go
-   ```
+```bash
+pacman -S socat
+```
+
+## Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/patrickkdev/tcp-tunnels.git
+cd tcp-tunnels
+```
+
+### 2. Configure environment variables
+
+Create a `.env` file in the project root with the required configuration values.
+
+Refer to `configs/init.go` for the expected environment variables.
+
+### 3. Run the application
+
+```bash
+go run cmd/app/main.go
+```
 
 ## Database Schema
 
-The `schema.sql` file defines the database tables for `tunnel_rows` and `tunnel_logs`:
+The `schema.sql` file defines the tables used by the system:
 
-- `tunnel_rows`: Stores the configuration for each TCP tunnel.
-- `tunnel_logs`: Records events and statistics related to tunnel activity.
+- `tunnel_rows` — Stores the configuration for each tunnel
+- `tunnel_logs` — Stores tunnel activity and process logs
 
 ## Contributing
 
-Contributions are welcome. Feel free to submit pull requests or open issues.
+Contributions are welcome. Feel free to open issues or submit pull requests.
